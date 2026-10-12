@@ -22,6 +22,8 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 - Jeu de données fictif rejouable : 10 comptes, 30 clients, 50 réclamations, avec des cas tordus (retards, montant nul ou énorme, doublon probable, client injoignable, texte contenant du code, conseiller sans dossier).
 - Page `/administration`, réservée au responsable (contrôle côté serveur) : compteurs par statut et bouton « Générer le jeu de données ».
 - Règle de l'échéance à deux mois, isolée dans `src/lib/echeance.ts`.
+- Page `/reclamations` : liste filtrable par statut et par retard, badges « En retard » et « Échéance proche », quatre états (chargement, vide, données, erreur). Le responsable voit tout ; un conseiller ne voit que ses dossiers, tri fait dans la requête à la base.
+- Comptes de services : Resend créé par Alexis (clé à ranger dans Vercel sous `RESEND_API_KEY`, à confirmer) ; UptimeRobot et Sentry à confirmer.
 
 ## Vérifié, et comment
 
@@ -29,7 +31,8 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 - Prévisualisation de la branche `reclamations`, par Alexis : après génération, la page affiche 50 réclamations, 30 clients, 11 comptes ; 8 nouvelles, 14 en cours, 7 en attente client, 6 à valider, 15 clôturées, 3 en retard.
 - Le générateur et la règle d'échéance ont été essayés à la main par l'IA, hors base (totaux, unicité des références, trois dates dont le 31 décembre).
 - Production, par Alexis : après un clic sur « Générer le jeu de données », la page affiche les mêmes chiffres (50 réclamations, 30 clients, 11 comptes, 3 en retard) et les compteurs se mettent à jour seuls.
-- **Pas vérifié** : le refus d'accès à `/administration` pour un conseiller, faute de compte conseiller capable de se connecter.
+- Prévisualisation de la branche `liste-reclamations`, par Alexis puis par l'IA dans la session d'Alexis : 50 lignes sans filtre, 6 « à valider », 3 « en retard » avec leur badge, et l'état vide pour « clôturée + en retard ».
+- **Pas vérifié** : la liste vue par un conseiller ; l'état « erreur » de la liste, jamais déclenché ; le refus d'accès à `/administration` pour un conseiller, faute de compte conseiller capable de se connecter.
 - **Il n'y a encore aucun test automatique.**
 
 ## Reste
@@ -37,10 +40,9 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 Pour la prochaine session, dans cet ordre conseillé :
 
 1. Relire avec Alexis le retour de Samuel sur le produit.
-2. La liste des réclamations, filtrable, avec ses quatre états (vide, chargement, données, erreur) : un conseiller ne voit que les siennes, le responsable voit tout.
-3. La fiche de détail et les changements de statut, avec les droits du tableau appliqués côté serveur et une ligne d'historique à chaque changement.
-4. Les tests rejoués à chaque envoi, en commençant par la règle d'échéance (cas normal, cas vide, cas piégé).
-5. Un moyen de créer des comptes conseillers qui peuvent se connecter (les invitations).
+2. La fiche de détail et les changements de statut, avec les droits du tableau appliqués côté serveur et une ligne d'historique à chaque changement.
+3. Les tests rejoués à chaque envoi, en commençant par la règle d'échéance (cas normal, cas vide, cas piégé).
+4. Un moyen de créer des comptes conseillers qui peuvent se connecter (les invitations).
 
 Reste aussi de la semaine 1 : formulaire de création validé, invitations par courriel et réinitialisation du mot de passe (Resend), API externe, pièces jointes (Vercel Blob), journaux de production, revue de sécurité, README. Comptes à créer : Resend, UptimeRobot, Sentry.
 
@@ -53,7 +55,7 @@ Reste aussi de la semaine 1 : formulaire de création validé, invitations par c
 - **Le dépôt est public** depuis le 12 octobre 2026, sur décision d'Alexis : tout le monde peut lire le code, la fiche de la formation recopiée dans `AGENTS.md` et ce fichier. Ne jamais y mettre de secret ni de donnée réelle.
 - **Aucune limite sur les tentatives de connexion.** À ajouter avant d'ouvrir le produit à d'autres participants.
 - **Vulnérabilités dans les dépendances** : `npm audit` en signale 13 (4 modérées, 9 élevées), non examinées. ESLint est dans une version qui n'est plus maintenue.
-- **Un déploiement de production a échoué une fois** (commit `9a5491a`) : GitHub a refusé de servir le code à Vercel pour cause de trop nombreuses demandes rapprochées. Sans conséquence, le déploiement suivant a réussi. Depuis, les envois sont regroupés.
+- **Deux déploiements ont échoué dans la matinée pour la même raison** (commit `9a5491a` en production, puis `4070472` en prévisualisation) : Vercel n'a pas pu récupérer le code auprès de GitHub. Sans conséquence, relancer par un nouvel envoi a suffi. À surveiller si cela se reproduit.
 - **Serveur de développement local** : il a servi une ancienne feuille de style après modification ; une construction complète donnait le bon résultat.
 - **Pas de `.env.local`** : le site ne peut pas parler à la base depuis le poste. Voulu pour l'instant.
 - Le projet Vercel en double `reclamations-agence-htas` a été supprimé ; son ancienne adresse ne doit plus être transmise.
