@@ -1,6 +1,6 @@
 # État de reprise
 
-Session du 12 octobre 2026. Objectif : le projet en ligne, avec une page de connexion qui répond sur l'adresse `.vercel.app`. **Objectif atteint.**
+Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, avec une page de connexion qui répond sur l'adresse `.vercel.app`. **Atteint**, puis prolongé : premier compte, tables métier, jeu de données.
 
 ## Où sont les choses
 
@@ -8,50 +8,51 @@ Session du 12 octobre 2026. Objectif : le projet en ligne, avec une page de conn
 - Dépôt GitHub (privé) : https://github.com/alexisdiligent-art/reclamations-agence
 - Projet Vercel : `reclamations-agence`, dans l'espace `yuka2`
 - Base de données : `reclamations-db` sur Neon, région Francfort, offre gratuite, créée depuis Vercel
-- Conventions et décisions : `AGENTS.md`
+- Conventions et décisions (dont le cycle de vie d'une réclamation) : `AGENTS.md`
+- Compte de démonstration : Camille Martin, `responsable@agence-exemple.fr`, rôle responsable. Le mot de passe n'est connu que d'Alexis.
 
 ## Fait
 
-- Projet Next.js (TypeScript) avec shadcn/ui, créé et enregistré dans Git.
-- `AGENTS.md` : la fiche de la formation recopiée, puis la section « Décisions » (sujet, deux rôles, stack, choix du jour, façon de travailler).
-- Dépôt GitHub créé, relié à Vercel : chaque envoi sur `main` déploie en production, chaque autre branche reçoit une prévisualisation.
-- Base Neon branchée. Chaque prévisualisation a sa propre copie de la base, séparée de la production.
-- Variables d'environnement saisies par Alexis dans Vercel, pour Production et Preview : `DATABASE_URL` et les autres variables posées par Neon, `AUTH_SECRET`. Aucun secret dans le dépôt, sur le poste ni dans le chat.
-- Connexion par courriel et mot de passe avec Auth.js ; mot de passe comparé avec bcrypt.
-- Table `utilisateurs` (courriel, nom, mot de passe haché, rôle `conseiller` ou `responsable`, date de création), créée par une migration jouée pendant chaque déploiement.
-- Page `/connexion` avec trois messages d'erreur : saisie invalide, identifiants incorrects, service indisponible. L'accueil `/` renvoie vers `/connexion` tant qu'on n'est pas connecté.
-- Le site tourne depuis Francfort, près de la base.
-
-- Page `/installation` : crée le premier compte, avec le rôle « responsable », et se ferme dès qu'un compte existe. En production depuis la fin de la session.
+- Projet Next.js (TypeScript) avec shadcn/ui, relié à GitHub et à Vercel : chaque envoi sur `main` déploie en production, chaque autre branche reçoit une prévisualisation avec sa propre copie de la base.
+- Variables d'environnement saisies par Alexis dans Vercel (Production et Preview) : celles de Neon, dont `DATABASE_URL`, et `AUTH_SECRET`. Aucun secret dans le dépôt, sur le poste ni dans le chat.
+- Connexion par courriel et mot de passe avec Auth.js ; mot de passe haché avec bcrypt. Page `/connexion` avec trois messages d'erreur distincts. L'accueil renvoie vers la connexion tant qu'on n'est pas connecté.
+- Page `/installation` : crée le premier compte responsable, puis se ferme dès qu'un compte existe.
+- Cycle de vie de la réclamation décidé et écrit dans `AGENTS.md` : cinq statuts, tableau des droits par rôle, deux règles métier.
+- Quatre tables, créées par migrations jouées à chaque déploiement : `utilisateurs`, `clients`, `reclamations`, `historique`.
+- Jeu de données fictif rejouable : 10 comptes, 30 clients, 50 réclamations, avec des cas tordus (retards, montant nul ou énorme, doublon probable, client injoignable, texte contenant du code, conseiller sans dossier).
+- Page `/administration`, réservée au responsable (contrôle côté serveur) : compteurs par statut et bouton « Générer le jeu de données ».
+- Règle de l'échéance à deux mois, isolée dans `src/lib/echeance.ts`.
 
 ## Vérifié, et comment
 
-- Prévisualisation de la branche `premier-compte` : Alexis a créé un responsable fictif puis s'est connecté avec ; l'accueil affichait « Connecté : Camille Martin (Responsable) ». Une fois le compte créé, `/installation` renvoie bien vers `/connexion`. Le bouton « Se déconnecter » n'a pas été confirmé.
-- Production : Alexis a créé le compte responsable fictif (Camille Martin, `responsable@agence-exemple.fr`) et s'est connecté avec ; l'accueil affichait « Connecté : Camille Martin (Responsable) ». La page `/installation` est donc fermée en production. Le mot de passe n'est connu que d'Alexis ; il n'existe pas encore de réinitialisation.
-
-- Prévisualisation de la branche `connexion` : Alexis a saisi des identifiants inconnus et obtenu « Courriel ou mot de passe incorrect », ce qui prouve que la base est interrogée.
-- Production : la page `/connexion` répond (vérifié par une requête automatique). Le geste « identifiants inconnus » reste à refaire par Alexis sur l'adresse de production.
-- Production : « Se déconnecter » ramène bien à la page de connexion (constaté par Alexis).
-- Il n'y a encore aucun test automatique.
+- Production, par Alexis : identifiants inconnus refusés sur la prévisualisation ; création du compte responsable, connexion (« Connecté : Camille Martin (Responsable) ») et déconnexion en production.
+- Prévisualisation de la branche `reclamations`, par Alexis : après génération, la page affiche 50 réclamations, 30 clients, 11 comptes ; 8 nouvelles, 14 en cours, 7 en attente client, 6 à valider, 15 clôturées, 3 en retard.
+- Le générateur et la règle d'échéance ont été essayés à la main par l'IA, hors base (totaux, unicité des références, trois dates dont le 31 décembre).
+- **Pas vérifié** : le jeu de données en production (il faut cliquer une fois sur le bouton) ; le refus d'accès à `/administration` pour un conseiller, faute de compte conseiller capable de se connecter.
+- **Il n'y a encore aucun test automatique.**
 
 ## Reste
 
 Pour la prochaine session, dans cet ordre conseillé :
 
-1. Créer un compte « conseiller » pour pouvoir comparer les deux rôles.
-2. Vérifier les rôles côté serveur (un rôle masqué à l'écran n'est pas un rôle).
-3. Mettre en place les tests rejoués à chaque envoi.
-4. Dessiner le cycle de vie d'une réclamation (statuts, transitions, qui a le droit de faire quoi) avant de coder les écrans.
+1. Générer le jeu de données en production, si ce n'est pas fait.
+2. La liste des réclamations, filtrable, avec ses quatre états (vide, chargement, données, erreur) : un conseiller ne voit que les siennes, le responsable voit tout.
+3. La fiche de détail et les changements de statut, avec les droits du tableau appliqués côté serveur et une ligne d'historique à chaque changement.
+4. Les tests rejoués à chaque envoi, en commençant par la règle d'échéance (cas normal, cas vide, cas piégé).
+5. Un moyen de créer des comptes conseillers qui peuvent se connecter (les invitations).
 
-Le reste de la semaine 1, non commencé volontairement : invitations par courriel, réinitialisation du mot de passe, les trois tables métier, les écrans et leurs quatre états, la règle métier, le jeu de données fictif, l'API externe, les pièces jointes, les journaux, la revue de sécurité, le README. Comptes à créer : Resend, UptimeRobot, Sentry.
+Reste aussi de la semaine 1 : formulaire de création validé, invitations par courriel et réinitialisation du mot de passe (Resend), API externe, pièces jointes (Vercel Blob), journaux de production, revue de sécurité, README. Comptes à créer : Resend, UptimeRobot, Sentry.
+
+À confirmer par Alexis : le délai de deux mois pour répondre à une réclamation, et la liste des sept motifs.
 
 ## Cassé ou à surveiller
 
-- **Projet Vercel en double, réglé** : `reclamations-agence-htas`, relié par erreur au même dépôt, a été supprimé par Alexis en fin de session. L'ancienne adresse `reclamations-agence-htas.vercel.app` ne doit plus être utilisée ni transmise.
-- **Accès au dépôt pour Netaniel** : le dépôt est privé ; il reste à l'inviter comme collaborateur sur GitHub, ou à passer le dépôt en public.
-- **Vulnérabilités dans les dépendances** : `npm audit` en signale 13 (4 modérées, 9 élevées). Elles n'ont pas été examinées. À traiter lors de la revue de sécurité de la semaine 1.
-- **ESLint** (l'outil de contrôle du code) est installé dans une version qui n'est plus maintenue ; c'est celle posée par l'outil de création de Next.js.
-- **Aucune limite sur les tentatives de connexion** : on peut essayer des mots de passe sans frein. À ajouter avant d'ouvrir le produit à d'autres participants.
-- **Serveur de développement local** : après une modification de la feuille de style, il a continué à servir l'ancienne version. Une construction complète (`npm run build`) donnait le bon résultat. Sans conséquence en ligne.
-- **Pas de `.env.local`** : le site ne peut pas parler à la base depuis le poste. C'est voulu aujourd'hui ; à décider si le besoin apparaît.
-- Le dernier commit (ce fichier) est allé directement sur `main`, sans branche, parce qu'il ne contient que de la documentation.
+- **Les comptes fictifs ne peuvent pas se connecter** : ils n'ont pas de mot de passe utilisable. Seul le compte Camille Martin entre dans le produit.
+- **Regénérer le jeu de données efface les réclamations liées aux clients et comptes fictifs.** Sans danger aujourd'hui ; à revoir quand de vraies saisies de démonstration existeront.
+- **Accès au dépôt** : il est privé ; Netaniel et Samuel ne peuvent pas l'ouvrir sans invitation.
+- **Aucune limite sur les tentatives de connexion.** À ajouter avant d'ouvrir le produit à d'autres participants.
+- **Vulnérabilités dans les dépendances** : `npm audit` en signale 13 (4 modérées, 9 élevées), non examinées. ESLint est dans une version qui n'est plus maintenue.
+- **Un déploiement de production a échoué une fois** (commit `9a5491a`) : GitHub a refusé de servir le code à Vercel pour cause de trop nombreuses demandes rapprochées. Sans conséquence, le déploiement suivant a réussi. Depuis, les envois sont regroupés.
+- **Serveur de développement local** : il a servi une ancienne feuille de style après modification ; une construction complète donnait le bon résultat.
+- **Pas de `.env.local`** : le site ne peut pas parler à la base depuis le poste. Voulu pour l'instant.
+- Le projet Vercel en double `reclamations-agence-htas` a été supprimé ; son ancienne adresse ne doit plus être transmise.
