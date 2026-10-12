@@ -10,26 +10,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getDb } from "@/db";
-import {
-  clients,
-  reclamations,
-  statutEnum,
-  utilisateurs,
-  type Statut,
-} from "@/db/schema";
+import { clients, reclamations, statutEnum, utilisateurs } from "@/db/schema";
+import { LIBELLES_STATUT } from "@/lib/libelles";
 import { exigerResponsable } from "@/lib/session";
 import { BoutonGeneration } from "./bouton-generation";
 
 export const metadata: Metadata = {
   title: "Administration · Réclamations clients",
-};
-
-const LIBELLES_STATUT: Record<Statut, string> = {
-  nouvelle: "Nouvelle",
-  en_cours: "En cours",
-  en_attente_client: "En attente client",
-  a_valider: "À valider",
-  cloturee: "Clôturée",
 };
 
 export default function PageAdministration() {
