@@ -5,7 +5,7 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 ## Où sont les choses
 
 - Production : https://reclamations-agence.vercel.app
-- Dépôt GitHub (privé) : https://github.com/alexisdiligent-art/reclamations-agence
+- Dépôt GitHub (public) : https://github.com/alexisdiligent-art/reclamations-agence
 - Projet Vercel : `reclamations-agence`, dans l'espace `yuka2`
 - Base de données : `reclamations-db` sur Neon, région Francfort, offre gratuite, créée depuis Vercel
 - Conventions et décisions (dont le cycle de vie d'une réclamation) : `AGENTS.md`
@@ -49,7 +49,7 @@ Reste aussi de la semaine 1 : formulaire de création validé, invitations par c
 
 - **Les comptes fictifs ne peuvent pas se connecter** : ils n'ont pas de mot de passe utilisable. Seul le compte Camille Martin entre dans le produit.
 - **Regénérer le jeu de données efface les réclamations liées aux clients et comptes fictifs.** Sans danger aujourd'hui ; à revoir quand de vraies saisies de démonstration existeront.
-- **Accès au dépôt** : il est privé ; Netaniel et Samuel ne peuvent pas l'ouvrir sans invitation.
+- **Le dépôt est public** depuis le 12 octobre 2026, sur décision d'Alexis : tout le monde peut lire le code, la fiche de la formation recopiée dans `AGENTS.md` et ce fichier. Ne jamais y mettre de secret ni de donnée réelle.
 - **Aucune limite sur les tentatives de connexion.** À ajouter avant d'ouvrir le produit à d'autres participants.
 - **Vulnérabilités dans les dépendances** : `npm audit` en signale 13 (4 modérées, 9 élevées), non examinées. ESLint est dans une version qui n'est plus maintenue.
 - **Un déploiement de production a échoué une fois** (commit `9a5491a`) : GitHub a refusé de servir le code à Vercel pour cause de trop nombreuses demandes rapprochées. Sans conséquence, le déploiement suivant a réussi. Depuis, les envois sont regroupés.
