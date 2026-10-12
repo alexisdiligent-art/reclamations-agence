@@ -28,14 +28,15 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 - Production, par Alexis : identifiants inconnus refusés sur la prévisualisation ; création du compte responsable, connexion (« Connecté : Camille Martin (Responsable) ») et déconnexion en production.
 - Prévisualisation de la branche `reclamations`, par Alexis : après génération, la page affiche 50 réclamations, 30 clients, 11 comptes ; 8 nouvelles, 14 en cours, 7 en attente client, 6 à valider, 15 clôturées, 3 en retard.
 - Le générateur et la règle d'échéance ont été essayés à la main par l'IA, hors base (totaux, unicité des références, trois dates dont le 31 décembre).
-- **Pas vérifié** : le jeu de données en production (il faut cliquer une fois sur le bouton) ; le refus d'accès à `/administration` pour un conseiller, faute de compte conseiller capable de se connecter.
+- Production, par Alexis : après un clic sur « Générer le jeu de données », la page affiche les mêmes chiffres (50 réclamations, 30 clients, 11 comptes, 3 en retard) et les compteurs se mettent à jour seuls.
+- **Pas vérifié** : le refus d'accès à `/administration` pour un conseiller, faute de compte conseiller capable de se connecter.
 - **Il n'y a encore aucun test automatique.**
 
 ## Reste
 
 Pour la prochaine session, dans cet ordre conseillé :
 
-1. Générer le jeu de données en production, si ce n'est pas fait.
+1. Relire avec Alexis le retour de Samuel sur le produit.
 2. La liste des réclamations, filtrable, avec ses quatre états (vide, chargement, données, erreur) : un conseiller ne voit que les siennes, le responsable voit tout.
 3. La fiche de détail et les changements de statut, avec les droits du tableau appliqués côté serveur et une ligne d'historique à chaque changement.
 4. Les tests rejoués à chaque envoi, en commençant par la règle d'échéance (cas normal, cas vide, cas piégé).
