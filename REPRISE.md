@@ -23,7 +23,10 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 - Page `/administration`, réservée au responsable (contrôle côté serveur) : compteurs par statut et bouton « Générer le jeu de données ».
 - Règle de l'échéance à deux mois, isolée dans `src/lib/echeance.ts`.
 - Page `/reclamations` : liste filtrable par statut et par retard, badges « En retard » et « Échéance proche », quatre états (chargement, vide, données, erreur). Le responsable voit tout ; un conseiller ne voit que ses dossiers, tri fait dans la requête à la base.
-- Comptes de services : Resend créé par Alexis (clé à ranger dans Vercel sous `RESEND_API_KEY`, à confirmer) ; UptimeRobot et Sentry à confirmer.
+- Comptes de services créés par Alexis, rien n'est encore branché dans le code :
+  - Resend : clé rangée dans Vercel sous `RESEND_API_KEY` (Production et Preview).
+  - UptimeRobot : compte créé, avec une première sonde sur `reclamations-agence.vercel.app`. L'alerte n'a jamais été déclenchée en vrai.
+  - Sentry : inscription faite avec GitHub, organisation `alexis-formation`, données stockées dans l'Union européenne. À confirmer en ouvrant le tableau de bord ; aucun projet créé.
 
 ## Vérifié, et comment
 
@@ -44,8 +47,7 @@ Pour la prochaine session, dans cet ordre conseillé :
 3. Les tests rejoués à chaque envoi, en commençant par la règle d'échéance (cas normal, cas vide, cas piégé).
 4. Un moyen de créer des comptes conseillers qui peuvent se connecter (les invitations).
 
-Reste aussi de la semaine 1 : formulaire de création validé, invitations par courriel et réinitialisation du mot de passe (Resend), API externe, pièces jointes (Vercel Blob), journaux de production, revue de sécurité, README. Comptes à créer : Resend, UptimeRobot, Sentry.
-
+Reste aussi de la semaine 1 : formulaire de création validé, invitations par courriel et réinitialisation du mot de passe (Resend), API externe, pièces jointes (Vercel Blob), journaux de production, revue de sécurité, README.
 À confirmer par Alexis : le délai de deux mois pour répondre à une réclamation, et la liste des sept motifs.
 
 ## Cassé ou à surveiller
