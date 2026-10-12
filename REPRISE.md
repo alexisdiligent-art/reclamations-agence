@@ -22,18 +22,23 @@ Session du 12 octobre 2026. Objectif : le projet en ligne, avec une page de conn
 - Page `/connexion` avec trois messages d'erreur : saisie invalide, identifiants incorrects, service indisponible. L'accueil `/` renvoie vers `/connexion` tant qu'on n'est pas connecté.
 - Le site tourne depuis Francfort, près de la base.
 
+- Page `/installation` : crée le premier compte, avec le rôle « responsable », et se ferme dès qu'un compte existe. En production depuis la fin de la session.
+
 ## Vérifié, et comment
+
+- Prévisualisation de la branche `premier-compte` : Alexis a créé un responsable fictif puis s'est connecté avec ; l'accueil affichait « Connecté : Camille Martin (Responsable) ». Une fois le compte créé, `/installation` renvoie bien vers `/connexion`. Le bouton « Se déconnecter » n'a pas été confirmé.
+- **À faire en premier à la reprise si ce n'est pas fait : créer le compte responsable en production** sur https://reclamations-agence.vercel.app/installation. Tant que la base de production est vide, cette page est ouverte à quiconque en connaît l'adresse.
 
 - Prévisualisation de la branche `connexion` : Alexis a saisi des identifiants inconnus et obtenu « Courriel ou mot de passe incorrect », ce qui prouve que la base est interrogée.
 - Production : la page `/connexion` répond (vérifié par une requête automatique). Le geste « identifiants inconnus » reste à refaire par Alexis sur l'adresse de production.
-- Jamais vérifié : une connexion réussie, puisqu'aucun compte n'existe. La page d'accueil d'une personne connectée et le bouton « Se déconnecter » n'ont donc jamais été vus en vrai.
+- Jamais vérifié en production : une connexion réussie.
 - Il n'y a encore aucun test automatique.
 
 ## Reste
 
 Pour la prochaine session, dans cet ordre conseillé :
 
-1. Créer le premier compte « responsable », puis vérifier une connexion et une déconnexion réussies.
+1. Vérifier en production la connexion et la déconnexion du compte responsable.
 2. Vérifier les rôles côté serveur (un rôle masqué à l'écran n'est pas un rôle).
 3. Mettre en place les tests rejoués à chaque envoi.
 4. Dessiner le cycle de vie d'une réclamation (statuts, transitions, qui a le droit de faire quoi) avant de coder les écrans.
