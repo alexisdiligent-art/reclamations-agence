@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
+  // shadcn/ui lit la police de l'interface dans --font-sans (voir globals.css).
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
