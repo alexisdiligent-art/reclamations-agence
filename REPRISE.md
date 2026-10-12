@@ -42,7 +42,8 @@ Le reste de la semaine 1, non commencé volontairement : invitations par courrie
 
 ## Cassé ou à surveiller
 
-- **Projet Vercel en double** : `reclamations-agence-htas` est relié au même dépôt, sans variables. Chacun de ses déploiements échoue. Alexis était en train de le supprimer en fin de session : vérifier qu'il n'existe plus. L'ancienne adresse `reclamations-agence-htas.vercel.app` ne doit plus être utilisée ni transmise.
+- **Projet Vercel en double, réglé** : `reclamations-agence-htas`, relié par erreur au même dépôt, a été supprimé par Alexis en fin de session. L'ancienne adresse `reclamations-agence-htas.vercel.app` ne doit plus être utilisée ni transmise.
+- **Accès au dépôt pour Netaniel** : le dépôt est privé ; il reste à l'inviter comme collaborateur sur GitHub, ou à passer le dépôt en public.
 - **Vulnérabilités dans les dépendances** : `npm audit` en signale 13 (4 modérées, 9 élevées). Elles n'ont pas été examinées. À traiter lors de la revue de sécurité de la semaine 1.
 - **ESLint** (l'outil de contrôle du code) est installé dans une version qui n'est plus maintenue ; c'est celle posée par l'outil de création de Next.js.
 - **Aucune limite sur les tentatives de connexion** : on peut essayer des mots de passe sans frein. À ajouter avant d'ouvrir le produit à d'autres participants.
