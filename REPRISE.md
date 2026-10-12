@@ -27,18 +27,18 @@ Session du 12 octobre 2026. Objectif : le projet en ligne, avec une page de conn
 ## Vérifié, et comment
 
 - Prévisualisation de la branche `premier-compte` : Alexis a créé un responsable fictif puis s'est connecté avec ; l'accueil affichait « Connecté : Camille Martin (Responsable) ». Une fois le compte créé, `/installation` renvoie bien vers `/connexion`. Le bouton « Se déconnecter » n'a pas été confirmé.
-- **À faire en premier à la reprise si ce n'est pas fait : créer le compte responsable en production** sur https://reclamations-agence.vercel.app/installation. Tant que la base de production est vide, cette page est ouverte à quiconque en connaît l'adresse.
+- Production : Alexis a créé le compte responsable fictif (Camille Martin, `responsable@agence-exemple.fr`) et s'est connecté avec ; l'accueil affichait « Connecté : Camille Martin (Responsable) ». La page `/installation` est donc fermée en production. Le mot de passe n'est connu que d'Alexis ; il n'existe pas encore de réinitialisation.
 
 - Prévisualisation de la branche `connexion` : Alexis a saisi des identifiants inconnus et obtenu « Courriel ou mot de passe incorrect », ce qui prouve que la base est interrogée.
 - Production : la page `/connexion` répond (vérifié par une requête automatique). Le geste « identifiants inconnus » reste à refaire par Alexis sur l'adresse de production.
-- Jamais vérifié en production : une connexion réussie.
+- Pas encore confirmé : le bouton « Se déconnecter ».
 - Il n'y a encore aucun test automatique.
 
 ## Reste
 
 Pour la prochaine session, dans cet ordre conseillé :
 
-1. Vérifier en production la connexion et la déconnexion du compte responsable.
+1. Vérifier en production la déconnexion du compte responsable.
 2. Vérifier les rôles côté serveur (un rôle masqué à l'écran n'est pas un rôle).
 3. Mettre en place les tests rejoués à chaque envoi.
 4. Dessiner le cycle de vie d'une réclamation (statuts, transitions, qui a le droit de faire quoi) avant de coder les écrans.
