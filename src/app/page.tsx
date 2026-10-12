@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -43,6 +44,14 @@ async function Bienvenue() {
           Les écrans de gestion des réclamations arrivent dans les prochaines
           étapes.
         </p>
+        {session.user.role === "responsable" && (
+          <Link
+            href="/administration"
+            className="text-sm underline underline-offset-4"
+          >
+            Administration et jeu de données
+          </Link>
+        )}
         <form action={seDeconnecter}>
           <Button type="submit" variant="outline">
             Se déconnecter

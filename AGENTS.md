@@ -225,6 +225,37 @@ Ce que chaque rôle a le droit de faire sera décidé avec le cycle de vie de la
 - Une seule table pour les comptes, `utilisateurs`, qui porte le rôle.
 - L'interface et les messages sont en français.
 
+## La réclamation et son cycle de vie (décidé le 12 octobre 2026, modifiable)
+
+Statuts, dans l'ordre normal : **nouvelle → en cours → à valider → clôturée**.
+Depuis « en cours », on peut passer à **en attente client** et en revenir.
+Depuis « à valider », le responsable peut refuser : retour à « en cours ».
+
+| Statut | Sens |
+|---|---|
+| nouvelle | Enregistrée, pas encore prise en charge |
+| en cours | Un conseiller la traite |
+| en attente client | On attend une pièce ou une réponse du client |
+| à valider | Le conseiller propose une réponse, le responsable tranche |
+| clôturée | Réponse donnée au client, dossier fermé |
+
+Qui a le droit de faire quoi (à vérifier côté serveur, pas seulement à l'écran) :
+
+| Action | Conseiller | Responsable |
+|---|---|---|
+| Créer une réclamation | Oui | Oui |
+| Voir les réclamations | Les siennes seulement | Toutes |
+| Traiter, mettre en attente, proposer une réponse | Les siennes | Toutes |
+| Valider ou refuser la clôture | Non | Oui |
+| Réattribuer à un autre conseiller | Non | Oui |
+
+Règles métier :
+
+- Chaque réclamation a une échéance de réponse deux mois après sa réception ; le produit signale celles qui sont en retard ou proches du délai. Le délai de deux mois est à confirmer par Alexis.
+- Un conseiller ne clôture jamais seul : la clôture passe par la validation du responsable.
+
+Tables : `utilisateurs`, `clients`, `reclamations`, `historique` (une ligne par changement de statut).
+
 ## Façon de travailler
 
 - Aucun secret dans le code, le dépôt ni le chat. Les clés vivent dans les variables d'environnement de Vercel, saisies par Alexis. `.env.local` reste hors du dépôt.
