@@ -220,6 +220,9 @@ Ce que chaque rôle a le droit de faire sera décidé avec le cycle de vie de la
 - Connexion par courriel et mot de passe, gérée par Auth.js ; le mot de passe est haché par une bibliothèque reconnue (bcrypt).
 - Accès à la base et migrations avec Drizzle. Les migrations sont jouées pendant le déploiement sur Vercel.
 - Dépôt GitHub `reclamations-agence`, privé.
+- Adresse de production : https://reclamations-agence.vercel.app (projet Vercel `reclamations-agence`).
+- Base Neon `reclamations-db` à Francfort ; le site tourne aussi depuis Francfort. Chaque prévisualisation a sa propre copie de la base.
+- Une seule table pour les comptes, `utilisateurs`, qui porte le rôle.
 - L'interface et les messages sont en français.
 
 ## Façon de travailler
