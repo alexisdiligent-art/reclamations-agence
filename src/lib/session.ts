@@ -2,16 +2,21 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
-// À appeler dans chaque page et chaque action réservée au responsable :
-// le contrôle se fait ici, côté serveur, pas en masquant un bouton à l'écran.
-export async function exigerResponsable() {
+// Les contrôles d'accès se font ici, côté serveur, pas en masquant un bouton à l'écran.
+
+export async function exigerSession() {
   const session = await auth();
   if (!session?.user) redirect("/connexion");
-  if (session.user.role !== "responsable") {
+  return session.user;
+}
+
+export async function exigerResponsable() {
+  const utilisateur = await exigerSession();
+  if (utilisateur.role !== "responsable") {
     console.warn(
-      `Accès refusé : ${session.user.email} (${session.user.role ?? "sans rôle"}) a tenté d'ouvrir une zone réservée au responsable.`,
+      `Accès refusé : ${utilisateur.email} (${utilisateur.role ?? "sans rôle"}) a tenté d'ouvrir une zone réservée au responsable.`,
     );
     redirect("/");
   }
-  return session.user;
+  return utilisateur;
 }

@@ -44,6 +44,9 @@ async function Bienvenue() {
           Les écrans de gestion des réclamations arrivent dans les prochaines
           étapes.
         </p>
+        <Link href="/reclamations" className="text-sm underline underline-offset-4">
+          Voir les réclamations
+        </Link>
         {session.user.role === "responsable" && (
           <Link
             href="/administration"
