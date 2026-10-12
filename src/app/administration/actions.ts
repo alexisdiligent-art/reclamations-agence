@@ -1,6 +1,7 @@
 "use server";
 
 import { inArray, like, or } from "drizzle-orm";
+import { refresh } from "next/cache";
 import { getDb } from "@/db";
 import {
   DOMAINE_COMPTES_FICTIFS,
@@ -54,6 +55,8 @@ export async function regenererJeuDeDonnees(): Promise<EtatGeneration> {
     return { erreur: "La génération a échoué. Rien n'a été modifié." };
   }
 
+  // Fait relire la page par le serveur, pour que les compteurs affichent le nouveau contenu.
+  refresh();
   console.info(
     `Jeu de données régénéré par ${responsable.email} : ${jeu.reclamations.length} réclamations, ${jeu.clients.length} clients, ${jeu.comptes.length} comptes.`,
   );
