@@ -26,7 +26,7 @@ Session du 12 octobre 2026 (matin). Objectif de départ : le projet en ligne, av
 - Comptes de services créés par Alexis, rien n'est encore branché dans le code :
   - Resend : clé rangée dans Vercel sous `RESEND_API_KEY` (Production et Preview).
   - UptimeRobot : compte créé, avec une première sonde sur `reclamations-agence.vercel.app`. L'alerte n'a jamais été déclenchée en vrai.
-  - Sentry : inscription faite avec GitHub, organisation `alexis-formation`, données stockées dans l'Union européenne. À confirmer en ouvrant le tableau de bord ; aucun projet créé.
+  - Sentry : compte créé avec GitHub, organisation `alexis-formation` (https://alexis-formation.sentry.io), données stockées dans l'Union européenne. Aucun projet créé.
 
 ## Vérifié, et comment
 
