@@ -31,14 +31,14 @@ Session du 12 octobre 2026. Objectif : le projet en ligne, avec une page de conn
 
 - Prévisualisation de la branche `connexion` : Alexis a saisi des identifiants inconnus et obtenu « Courriel ou mot de passe incorrect », ce qui prouve que la base est interrogée.
 - Production : la page `/connexion` répond (vérifié par une requête automatique). Le geste « identifiants inconnus » reste à refaire par Alexis sur l'adresse de production.
-- Pas encore confirmé : le bouton « Se déconnecter ».
+- Production : « Se déconnecter » ramène bien à la page de connexion (constaté par Alexis).
 - Il n'y a encore aucun test automatique.
 
 ## Reste
 
 Pour la prochaine session, dans cet ordre conseillé :
 
-1. Vérifier en production la déconnexion du compte responsable.
+1. Créer un compte « conseiller » pour pouvoir comparer les deux rôles.
 2. Vérifier les rôles côté serveur (un rôle masqué à l'écran n'est pas un rôle).
 3. Mettre en place les tests rejoués à chaque envoi.
 4. Dessiner le cycle de vie d'une réclamation (statuts, transitions, qui a le droit de faire quoi) avant de coder les écrans.
